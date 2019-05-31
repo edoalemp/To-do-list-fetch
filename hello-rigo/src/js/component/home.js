@@ -12,20 +12,26 @@ class Listask extends React.Component {
 		this.addtoarraytask = this.addtoarraytask.bind(this);
 	}
 
+	// agrega nueva tarea
+
 	addtoarraytask(event) {
 		if (event.which == 13) {
 			let array = this.state.arraytask;
-			array.push(event.target.value);
+			array.push(this.state.text);
 			this.setState({
 				arraytask: array
 			});
 		}
 	}
 
+	// registra ingreso de tarea
+
 	createtask(event) {
 		this.setState({ text: event.target.value });
 		console.log(this.state);
 	}
+
+	// Dibuja el componente
 
 	render() {
 		return (
