@@ -1,6 +1,7 @@
 //import react into the bundle
 import React from "react";
 import ReactDOM from "react-dom";
+import PropType from "prop-types";
 
 //include bootstrap npm library into the bundle
 import "bootstrap";

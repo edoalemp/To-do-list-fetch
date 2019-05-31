@@ -1,33 +1,36 @@
 import React from "react";
+import PropType from "prop-types";
 
 class Newtask extends React.Component {
 	constructor() {
 		super();
-		this.state = { arraytask: [] };
+		this.state = {
+			arraytask: [],
+			text: ""
+		};
 	}
 
-	adtoarray(event) {
-		if (event.keyCode == 13) {
-			this.state.arraytask.push(this.state.task);
+	addtoarray(event) {
+		let array = this.arraytask;
+		if (event.which == 13) {
+			array.push(event.target.value);
+			this.setState({ arraytask: array });
 		}
 	}
 
 	render() {
 		return (
-			<input
-				onKeypress={this.adtoarray}
-				className="form-control form-control-lg"
-				type="text"
-				placeholder="New task"
-				value={this.state.task}
-			/>
+			<div>
+				<input
+					onKeyPress={this.addtoarray}
+					className="form-control form-control-lg"
+					type="text"
+					placeholder="New task"
+					defaultValue={this.state.text}
+				/>
+				<div>{this.state.arraytask}</div>
+			</div>
 		);
-	}
-}
-
-class Arraytask extends React.Component {
-	render() {
-		return <div />;
 	}
 }
 
@@ -40,7 +43,6 @@ export class Home extends React.Component {
 					<div className="col col-lg-6">
 						<div className="text-center mt-5">
 							<Newtask />
-							<Arraytask />
 						</div>
 					</div>
 				</div>
@@ -49,4 +51,4 @@ export class Home extends React.Component {
 	}
 }
 
-let arraytask = [];
+let text = "";
