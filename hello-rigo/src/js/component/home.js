@@ -1,7 +1,7 @@
 import React from "react";
 import PropType from "prop-types";
 
-class Listask extends React.Component {
+class Newtask extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -15,7 +15,7 @@ class Listask extends React.Component {
 	// agrega nueva tarea
 
 	addtoarraytask(event) {
-		if (event.which == 13) {
+		if (event.which == 13 && event.target.value !== "") {
 			let array = this.state.arraytask;
 			array.push(this.state.text);
 			this.setState({
@@ -28,12 +28,41 @@ class Listask extends React.Component {
 
 	createtask(event) {
 		this.setState({ text: event.target.value });
-		console.log(this.state);
 	}
 
-	// Dibuja el componente
+	deltask() {}
+
+	// Dibuja casilla de ingreso
 
 	render() {
+		let array = this.state.arraytask;
+		let arrayhtml = [];
+		console.log(array);
+		if (array[0] !== null) {
+			for (let i = 0; i <= array.length - 1; i++) {
+				arrayhtml.push(
+					<div className="alert alert-dark alert-dismissible fade show m-0">
+						<button
+							type="button"
+							className="close"
+							data-dismiss="alert">
+							&times;
+						</button>
+						{array[i]}
+					</div>
+
+					/*				<div>
+						<input
+							className="form-control form-control-lg"
+							type="text"
+							placeholder=".form-control-lg"
+							value={array[i]}
+							disabled
+						/>
+					</div>*/
+				);
+			}
+		}
 		return (
 			<div>
 				<input
@@ -43,7 +72,7 @@ class Listask extends React.Component {
 					placeholder="New task"
 					onChange={this.createtask}
 				/>
-				<div>{this.state.arraytask}</div>
+				{arrayhtml}
 			</div>
 		);
 	}
@@ -57,7 +86,7 @@ export class Home extends React.Component {
 				<div className="row justify-content-md-center">
 					<div className="col col-lg-6">
 						<div className="text-center mt-5">
-							<Listask />
+							<Newtask />
 						</div>
 					</div>
 				</div>
@@ -65,5 +94,3 @@ export class Home extends React.Component {
 		);
 	}
 }
-
-let text = "";
