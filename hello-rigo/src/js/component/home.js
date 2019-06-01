@@ -33,11 +33,11 @@ class Newtask extends React.Component {
 
 	deltask(event) {
 		let array = this.state.arraytask;
-
+		let i = event.target.value;
+		array.splice(i, 1);
 		this.setState({
 			arraytask: array
 		});
-		console.log(this.state.arraytask);
 	}
 
 	// Dibuja casilla de ingreso
@@ -45,7 +45,7 @@ class Newtask extends React.Component {
 	render() {
 		let array = this.state.arraytask;
 		let arrayhtml = [];
-		console.log(array);
+
 		if (array[0] !== null) {
 			for (let i = 0; i <= array.length - 1; i++) {
 				arrayhtml.push(
@@ -54,22 +54,11 @@ class Newtask extends React.Component {
 							type="button"
 							className="close"
 							data-dismiss="alert"
-							onClick={this.deltask}
-							value={i}>
+							onClick={this.deltask}>
 							&times;
 						</button>
 						{array[i]}
 					</div>
-
-					/*				<div>
-						<input
-							className="form-control form-control-lg"
-							type="text"
-							placeholder=".form-control-lg"
-							value={array[i]}
-							disabled
-						/>
-					</div>*/
 				);
 			}
 		}
@@ -82,7 +71,7 @@ class Newtask extends React.Component {
 					placeholder="New task"
 					onChange={this.createtask}
 				/>
-				{arrayhtml}
+				<div>{arrayhtml}</div>
 			</div>
 		);
 	}
