@@ -10,6 +10,7 @@ class Newtask extends React.Component {
 		};
 		this.createtask = this.createtask.bind(this);
 		this.addtoarraytask = this.addtoarraytask.bind(this);
+		this.deltask = this.deltask.bind(this);
 	}
 
 	// agrega nueva tarea
@@ -30,7 +31,14 @@ class Newtask extends React.Component {
 		this.setState({ text: event.target.value });
 	}
 
-	deltask() {}
+	deltask(event) {
+		let array = this.state.arraytask;
+
+		this.setState({
+			arraytask: array
+		});
+		console.log(this.state.arraytask);
+	}
 
 	// Dibuja casilla de ingreso
 
@@ -41,11 +49,13 @@ class Newtask extends React.Component {
 		if (array[0] !== null) {
 			for (let i = 0; i <= array.length - 1; i++) {
 				arrayhtml.push(
-					<div className="alert alert-dark alert-dismissible fade show m-0">
+					<div className="alert alert-dark alert-dismissible fade show m-0 text-left">
 						<button
 							type="button"
 							className="close"
-							data-dismiss="alert">
+							data-dismiss="alert"
+							onClick={this.deltask}
+							value={i}>
 							&times;
 						</button>
 						{array[i]}
