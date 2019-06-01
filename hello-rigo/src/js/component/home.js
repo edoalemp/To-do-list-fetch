@@ -38,6 +38,7 @@ class Newtask extends React.Component {
 		this.setState({
 			arraytask: array
 		});
+		console.log(this.state.arraytask);
 	}
 
 	// Dibuja casilla de ingreso
@@ -49,18 +50,19 @@ class Newtask extends React.Component {
 		if (array[0] !== null) {
 			for (let i = 0; i <= array.length - 1; i++) {
 				arrayhtml.push(
-					<div className="alert alert-dark alert-dismissible fade show m-0 text-left">
+					<div className="alert alert-dark fade show m-0 text-left">
 						<button
 							type="button"
 							className="close"
-							data-dismiss="alert"
-							onClick={this.deltask}>
+							onClick={this.deltask}
+							value={i}>
 							&times;
 						</button>
 						{array[i]}
 					</div>
 				);
 			}
+			console.log(arrayhtml.length);
 		}
 		return (
 			<div>
