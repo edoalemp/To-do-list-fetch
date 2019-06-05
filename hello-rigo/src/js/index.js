@@ -14,6 +14,4 @@ import { Home } from "./component/home.js";
 
 //render your react application
 
-//PUT arreglo vacio?
-
 ReactDOM.render(<Home />, document.querySelector("#app"));
