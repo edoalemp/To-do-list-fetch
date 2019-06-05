@@ -37,7 +37,7 @@ class ListTask extends React.Component {
 			let value = array.find(task => {
 				return task == this.state.text;
 			});
-			if (value == undefined) {
+			if (value === undefined) {
 				array.push(this.state.text);
 				/*			this.setState({
 					arraytask: array
@@ -60,8 +60,8 @@ class ListTask extends React.Component {
 
 	deltask(event) {
 		let array = this.state.arraytask;
-		let i = event.target.value;
-		array.splice(i, 1);
+		//let i = event.target.value;
+		array.splice(event.target.value, 1);
 		/*this.setState({
 			arraytask: array
 		});*/
@@ -108,7 +108,8 @@ class ListTask extends React.Component {
 			})
 			.then(data => {
 				//here is were your code should start after the fetch finishes
-				console.log(data.msg); //this will print on the console the exact object received from the server
+				console.log("GET");
+				console.log(data); //this will print on the console the exact object received from the server
 				if (
 					data.msg ===
 					"This use does not exists, first call the POST method first to create the list for this username"
@@ -143,6 +144,7 @@ class ListTask extends React.Component {
 			})
 			.then(data => {
 				//here is were your code should start after the fetch finishes
+				console.log("PUT");
 				console.log(data); //this will print on the console the exact object received from the server
 			})
 			.catch(error => {
@@ -167,6 +169,7 @@ class ListTask extends React.Component {
 			})
 			.then(data => {
 				//here is were your code should start after the fetch finishes
+				console.log("POST");
 				console.log(data); //this will print on the console the exact object received from the server
 			})
 			.catch(error => {
