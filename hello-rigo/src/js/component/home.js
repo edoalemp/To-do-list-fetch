@@ -27,6 +27,7 @@ class ListTask extends React.Component {
 		this.createtask = this.createtask.bind(this);
 		this.addtoarraytask = this.addtoarraytask.bind(this);
 		this.deltask = this.deltask.bind(this);
+		this.deletealltask = this.deletealltask.bind(this);
 	}
 
 	// agrega nueva tarea a la lista
@@ -39,17 +40,13 @@ class ListTask extends React.Component {
 			});
 			if (value === undefined) {
 				array.push(this.state.text);
-				/*			this.setState({
-					arraytask: array
-				});*/
+				let todos = converttoJ(array);
+				this.fetchput(todos);
+				this.fetchget();
+			} else {
+				event.target.value = "";
 			}
-
-			event.target.value = "";
-
-			let todos = converttoJ(array);
-			this.fetchput(todos);
 		}
-		this.fetchget();
 	}
 
 	// registra ingreso de tarea
@@ -60,14 +57,19 @@ class ListTask extends React.Component {
 
 	deltask(event) {
 		let array = this.state.arraytask;
-		//let i = event.target.value;
 		array.splice(event.target.value, 1);
-		/*this.setState({
-			arraytask: array
-		});*/
 		console.log(array);
-		let todos = converttoJ(array);
-		this.fetchput(todos);
+		if (array[0] === undefined) {
+			this.fetchdelete();
+		} else {
+			let todos = converttoJ(array);
+			this.fetchput(todos);
+		}
+		this.fetchget();
+	}
+
+	deletealltask() {
+		this.fetchdelete();
 		this.fetchget();
 	}
 
@@ -108,7 +110,8 @@ class ListTask extends React.Component {
 				console.log(data);
 				if (
 					data.msg ===
-					"This use does not exists, first call the POST method first to create the list for this username"
+						"This use does not exists, first call the POST method first to create the list for this username" ||
+					data.msg === "Ther json file alesanchezr was not found"
 				) {
 					this.fetchpost();
 				} else {
@@ -163,11 +166,29 @@ class ListTask extends React.Component {
 			});
 	}
 
-	//PUT array
+	fetchdelete() {
+		fetch("https://assets.breatheco.de/apis/fake/todos/user/alesanchezr", {
+			method: "DELETE",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+			.then(resp => {
+				return resp.json();
+			})
+			.then(data => {
+				console.log("DELETE");
+				console.log(data);
+				this.setState({
+					arraytask: []
+				});
+			})
+			.catch(error => {
+				console.log(error);
+			});
+	}
 
 	render() {
-		/* Dibuja casilla de ingreso */
-
 		let arrayhtml = this.createlisttask();
 		return (
 			<div>
@@ -181,7 +202,10 @@ class ListTask extends React.Component {
 				<div>{arrayhtml}</div>
 				<div className="alert alert-dark fade show m-0 text-left">
 					<button type="button" className="close">
-						<i className="fas fa-trash-alt" />
+						<i
+							className="fas fa-trash-alt"
+							onClick={this.deletealltask}
+						/>
 					</button>
 					Delete all Tasks
 				</div>
@@ -189,7 +213,6 @@ class ListTask extends React.Component {
 		);
 	}
 
-	// Actuliza la lista en la primera carga
 	componentDidMount() {
 		this.fetchget();
 	}
