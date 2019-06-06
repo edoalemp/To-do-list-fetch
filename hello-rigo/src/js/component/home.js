@@ -25,14 +25,14 @@ class ListTask extends React.Component {
 			text: ""
 		};
 		this.createtask = this.createtask.bind(this);
-		this.addtoarraytask = this.addtoarraytask.bind(this);
+		this.addtask = this.addtask.bind(this);
 		this.deltask = this.deltask.bind(this);
 		this.deletealltask = this.deletealltask.bind(this);
 	}
 
 	// agrega nueva tarea a la lista
 
-	addtoarraytask(event) {
+	addtask(event) {
 		if (event.which == 13 && event.target.value !== "") {
 			let array = this.state.arraytask;
 			let value = array.find(task => {
@@ -43,9 +43,8 @@ class ListTask extends React.Component {
 				let todos = converttoJ(array);
 				this.fetchput(todos);
 				this.fetchget();
-			} else {
-				event.target.value = "";
 			}
+			event.target.value = "";
 		}
 	}
 
@@ -59,17 +58,12 @@ class ListTask extends React.Component {
 		let array = this.state.arraytask;
 		array.splice(event.target.value, 1);
 		console.log(array);
-		if (array[0] === undefined) {
-			this.fetchdelete();
-		} else {
-			let todos = converttoJ(array);
-			this.fetchput(todos);
-		}
+		this.fetchput(converttoJ(array));
 		this.fetchget();
 	}
 
 	deletealltask() {
-		this.fetchdelete();
+		this.fetchput(converttoJ([]));
 		this.fetchget();
 	}
 
@@ -79,7 +73,9 @@ class ListTask extends React.Component {
 		if (array[0] !== null) {
 			for (let i = 0; i <= array.length - 1; i++) {
 				arrayhtml.push(
-					<div className="alert alert-dark fade show m-0 text-left">
+					<div
+						key={i}
+						className="alert alert-dark fade show m-0 text-left">
 						<button
 							type="button"
 							className="close"
@@ -160,6 +156,7 @@ class ListTask extends React.Component {
 			.then(data => {
 				console.log("POST");
 				console.log(data);
+				this.fetchget();
 			})
 			.catch(error => {
 				console.log(error);
@@ -179,9 +176,7 @@ class ListTask extends React.Component {
 			.then(data => {
 				console.log("DELETE");
 				console.log(data);
-				this.setState({
-					arraytask: []
-				});
+				this.fetchpost();
 			})
 			.catch(error => {
 				console.log(error);
@@ -193,7 +188,7 @@ class ListTask extends React.Component {
 		return (
 			<div>
 				<input
-					onKeyPress={this.addtoarraytask}
+					onKeyPress={this.addtask}
 					className="form-control form-control-lg"
 					type="text"
 					placeholder="New task"
