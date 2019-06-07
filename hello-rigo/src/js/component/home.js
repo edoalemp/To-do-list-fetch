@@ -40,9 +40,9 @@ class ListTask extends React.Component {
 			});
 			if (value === undefined) {
 				array.push(this.state.text);
-				let todos = converttoJ(array);
-				this.fetchput(todos);
-				this.fetchget();
+				//let todos = converttoJ(array);
+				this.fetchput(converttoJ(array), event);
+				//this.fetchget();
 			}
 			event.target.value = "";
 		}
@@ -59,12 +59,12 @@ class ListTask extends React.Component {
 		array.splice(event.target.value, 1);
 		console.log(array);
 		this.fetchput(converttoJ(array));
-		this.fetchget();
+		//this.fetchget();
 	}
 
 	deletealltask() {
 		this.fetchput(converttoJ([]));
-		this.fetchget();
+		//this.fetchget();
 	}
 
 	createlisttask() {
@@ -136,6 +136,7 @@ class ListTask extends React.Component {
 			.then(data => {
 				console.log("PUT");
 				console.log(data);
+				this.fetchget();
 			})
 			.catch(error => {
 				console.log(error);
