@@ -164,26 +164,6 @@ class ListTask extends React.Component {
 			});
 	}
 
-	fetchdelete() {
-		fetch("https://assets.breatheco.de/apis/fake/todos/user/alesanchezr", {
-			method: "DELETE",
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(resp => {
-				return resp.json();
-			})
-			.then(data => {
-				console.log("DELETE");
-				console.log(data);
-				this.fetchpost();
-			})
-			.catch(error => {
-				console.log(error);
-			});
-	}
-
 	render() {
 		let arrayhtml = this.createlisttask();
 		return (
